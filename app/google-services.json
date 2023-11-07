@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480085604183",
+    "project_id": "pseudo-36b47",
+    "storage_bucket": "pseudo-36b47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480085604183:android:2512d989a763201e373012",
+        "android_client_info": {
+          "package_name": "com.vikas.pseudo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480085604183-gaa7anh9u1funuctgcb494oe1co5d281.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAetvLT2fdzEEr3lkI9vQURAbISlbuzI3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480085604183-gaa7anh9u1funuctgcb494oe1co5d281.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
