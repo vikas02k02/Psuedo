@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText LogEmail , LogPassword;
     Button LogBtnLogin;
     FirebaseAuth auth;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                     LogEmail.setError("Required");
                 } else if (TextUtils.isEmpty(LogPasswordInput)) {
                     LogPassword.setError("Required");
-                } else if (!LogEmailInput.matches(emailPattern)) {
-                    LogEmail.setError("Enter Valid Email Address");
-
                 }else{
 
-                    auth.signInWithEmailAndPassword(LogEmailInput,LogPasswordInput).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    auth.signInWithEmailAndPassword(LogEmailInput+"@psuedo.com",LogPasswordInput).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){

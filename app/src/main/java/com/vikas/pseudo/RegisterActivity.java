@@ -42,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegConfirmPassword=findViewById(R.id.Reg_ET_ConfirmPassword);
         RegBtnRegister =findViewById(R.id.Reg_Btn_Register);
         TextView RegBtnLogin =findViewById(R.id.Reg_Btn_Login);
+        ProgressBar RegProgressBar =findViewById(R.id.Reg_ProgressBar);
         RegBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,21 +72,21 @@ public class RegisterActivity extends AppCompatActivity {
                     RegPassword.setError("Password Must be greater than 6 character");
                 } else {
 
-                    ProgressBar RegProgressBar =findViewById(R.id.Reg_ProgressBar);
-                    RegProgressBar.setVisibility(View.VISIBLE);
-                    Runnable myRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            RegProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(),"Either user already exists or some server error occurred",Toast.LENGTH_LONG).show();
-                            recreate();
-                            // Code to be executed after 10 seconds
-                        }
-                    };
-                    Handler handler=new Handler();
-                    handler.postDelayed(myRunnable,10000);
 
-                    auth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    RegProgressBar.setVisibility(View.VISIBLE);
+//                    Runnable myRunnable = new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            RegProgressBar.setVisibility(View.GONE);
+//                            Toast.makeText(getApplicationContext(),"Either user already exists or some server error occurred",Toast.LENGTH_LONG).show();
+//                            recreate();
+//                            // Code to be executed after 10 seconds
+//                        }
+//                    };
+//                    Handler handler=new Handler();
+//                    handler.postDelayed(myRunnable,10000);
+
+                    auth.createUserWithEmailAndPassword(Username+"@psuedo.com",Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
@@ -97,9 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
 
                                         if(task.isSuccessful()){
-                                            handler.removeCallbacks(myRunnable);
-                                            ImageView RegSuccess=findViewById(R.id.Reg_IV_Success);
                                             RegProgressBar.setVisibility(View.GONE);
+//                                            handler.removeCallbacks(myRunnable);
+                                            ImageView RegSuccess=findViewById(R.id.Reg_IV_Success);
+//                                            RegProgressBar.setVisibility(View.GONE);
                                             RegSuccess.setVisibility(View.VISIBLE);
                                             new Handler().postDelayed(new Runnable() {
                                                 @Override
@@ -113,10 +115,15 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                         else {
                                             RegProgressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(),"Could Not Register",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
+                            }
+                            else{
+                                RegProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(getApplicationContext() , Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_LONG).show();
+//                                recreate();
                             }
 
                         }
