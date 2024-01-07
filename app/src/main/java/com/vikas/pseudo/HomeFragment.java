@@ -3,6 +3,7 @@ package com.vikas.pseudo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.vikas.pseudo.utility.HomePostAdapter;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database;
     RecyclerView HomeRVPost;
     HomePostAdapter homePostAdapter;
-    ArrayList<UsersPostInfo> HomeArrayList;
+    ArrayList<GlobalPost> HomeArrayList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,18 +41,45 @@ public class HomeFragment extends Fragment {
         View rootView=inflater.inflate(R.layout.fragment_home, container, false);
         auth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-        DatabaseReference reference=database.getReference().child("Post");
+        DatabaseReference reference=database.getReference().child("GlobalPosts");
         HomeArrayList=new ArrayList<>();
-        reference.addValueEventListener(new ValueEventListener() {
+        HomeRVPost=rootView.findViewById(R.id.Home_RV_Post);
+        HomeRVPost.setLayoutManager(new LinearLayoutManager(getActivity()));
+        homePostAdapter=new HomePostAdapter(getActivity(),HomeArrayList);
+        HomeRVPost.setAdapter(homePostAdapter);
+        homePostAdapter.notifyDataSetChanged();
+        reference.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    String postDate = dataSnapshot.child("postDate").getValue(String.class);
-                    String postText = dataSnapshot.child("postText").getValue(String.class);
-                    UsersPostInfo post = new UsersPostInfo(postText,postDate);
-                    HomeArrayList.add(0,post);
-                }
-                homePostAdapter.notifyDataSetChanged();
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                String postDate = dataSnapshot.child("postDate").getValue(String.class);
+                String postText = dataSnapshot.child("postText").getValue(String.class);
+                String Username = dataSnapshot.child("username").getValue(String.class);
+                String userId = dataSnapshot.child("userId").getValue(String.class);
+                Integer postLikes = dataSnapshot.child("postLikes").getValue(Integer.class);
+                String postId = dataSnapshot.child("postId").getValue(String.class);
+
+                GlobalPost post = new GlobalPost(postId, postText, postDate, Username, userId, postLikes);
+
+                // Add the new post at the beginning of the list
+                HomeArrayList.add(0, post);
+
+                // Notify the adapter that a new item is added
+                homePostAdapter.notifyItemInserted(0);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
             }
 
             @Override
@@ -60,10 +89,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-        HomeRVPost=rootView.findViewById(R.id.Home_RV_Post);
-        HomeRVPost.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homePostAdapter=new HomePostAdapter(getActivity(),HomeArrayList);
-        HomeRVPost.setAdapter(homePostAdapter);
         // Inflate the layout for this fragment
         return rootView;
     }

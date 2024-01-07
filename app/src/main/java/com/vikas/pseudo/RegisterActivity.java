@@ -2,7 +2,6 @@ package com.vikas.pseudo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vikas.pseudo.model.UsersInfo;
 
 import java.util.Objects;
 
@@ -71,62 +70,38 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (Password.length() <=6) {
                     RegPassword.setError("Password Must be greater than 6 character");
                 } else {
-
-
                     RegProgressBar.setVisibility(View.VISIBLE);
-//                    Runnable myRunnable = new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            RegProgressBar.setVisibility(View.GONE);
-//                            Toast.makeText(getApplicationContext(),"Either user already exists or some server error occurred",Toast.LENGTH_LONG).show();
-//                            recreate();
-//                            // Code to be executed after 10 seconds
-//                        }
-//                    };
-//                    Handler handler=new Handler();
-//                    handler.postDelayed(myRunnable,10000);
 
-                    auth.createUserWithEmailAndPassword(Username+"@psuedo.com",Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                String Userid = Objects.requireNonNull(task.getResult().getUser()).getUid();
-                                reference=database.getReference("Users").child(Userid);
-                                userinfo=new UsersInfo(Username,Email,Password,Status);
-                                reference.setValue(userinfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                    auth.createUserWithEmailAndPassword(Username+"@psuedo.com",Password).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            String Userid = Objects.requireNonNull(task.getResult().getUser()).getUid();
+                            reference=database.getReference("Users").child(Userid);
+                            userinfo=new UsersInfo(Username,Email,Password,Status, 0);
+                            reference.child("Profile_details").setValue(userinfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
-                                        if(task.isSuccessful()){
-                                            RegProgressBar.setVisibility(View.GONE);
-//                                            handler.removeCallbacks(myRunnable);
-                                            ImageView RegSuccess=findViewById(R.id.Reg_IV_Success);
-//                                            RegProgressBar.setVisibility(View.GONE);
-                                            RegSuccess.setVisibility(View.VISIBLE);
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            },1000);
+                                    if(task.isSuccessful()){
+                                        RegProgressBar.setVisibility(View.GONE);
+                                        ImageView RegSuccess=findViewById(R.id.Reg_IV_Success);
+                                        RegSuccess.setVisibility(View.VISIBLE);
+                                        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
 
-                                        }
-                                        else {
-                                            RegProgressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-                                        }
                                     }
-                                });
-                            }
-                            else{
-                                RegProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(getApplicationContext() , Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_LONG).show();
-//                                recreate();
-                            }
-
+                                    else {
+                                        RegProgressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
+                        else{
+                            RegProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext() , Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
                     });
                 }
             }

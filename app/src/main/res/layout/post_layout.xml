@@ -2,19 +2,23 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_height="wrap_content">
     <LinearLayout
+        android:id="@+id/Home_post_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/Home_TV_PostProfile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/baseline_account_circle_24"
-            android:contentDescription="User image" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/logo"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,33 +26,95 @@
             android:layout_marginStart="5dp"
             android:gravity="center"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/Home_TV_Username"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="username"
-                android:textSize="20sp"
-                android:paddingBottom="4dp"
-                android:textColor="#009688"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/Home_TV_Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:textSize="17sp"
+                    android:textColor="#009688"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/Home_TV_PostDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/Home_TV_PostText"
                 android:layout_width="match_parent"
-                android:background="@drawable/post_shape"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
                 android:layout_height="wrap_content"
-                android:text="post text"
-                android:textSize="20sp"/>
+                android:text="Content"
+                android:textSize="16sp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
 
+                <ImageView
+                    android:id="@+id/Home_PostImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Home_Btn_Heart"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/likes_icon"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/Home_TV_Likes_Count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textSize="17sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Home_Btn_Trust"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="60dp"
+                    android:background="@drawable/trust_level"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/Home_TV_trust"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Not Trusted"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
 
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_below="@id/Home_post_layout"/>
 
 </RelativeLayout>

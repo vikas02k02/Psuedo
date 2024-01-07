@@ -1,12 +1,14 @@
-package com.vikas.pseudo;
+package com.vikas.pseudo.model;
 
 public class UsersInfo {
-    String Username ,Email, Password,Status;
-    public UsersInfo(String username , String email ,String password,String status){
+    private String Username ,Email, Password,Status ;
+    private int Trust_Level;
+    public UsersInfo(String username , String email , String password, String status, int trustLevel){
         this.Username=username;
         this.Email=email;
         this.Password=password;
         this.Status=status;
+        this.Trust_Level = trustLevel;
     }
 
     public String getUsername() {
@@ -39,5 +41,13 @@ public class UsersInfo {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public int getTrust_Level() {
+        return Trust_Level;
+    }
+
+    public void setTrust_Level(int trust_Level) {
+        Trust_Level = trust_Level;
     }
 }

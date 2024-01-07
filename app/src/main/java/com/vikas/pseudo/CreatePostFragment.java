@@ -50,14 +50,15 @@ public class CreatePostFragment extends Fragment {
                     Toast.makeText(getActivity(),"Post Can't be empty",Toast.LENGTH_SHORT).show();
                 }else {
                       String userId= Objects.requireNonNull(PostAuth.getCurrentUser()).getUid();
+                      String email = PostAuth.getCurrentUser().getEmail();
+                      String username = email.substring(0,email.length()-11);
                       DatabaseReference UsernameReference=PostDatabase.getReference("Users");
-                      DatabaseReference PostDataRef=PostDatabase.getReference("Post");
+                      DatabaseReference PostDataRef=PostDatabase.getReference("GlobalPosts");
                       String postId= PostDataRef.push().getKey();
                       LocalDate currentDate= LocalDate.now();
                       String formattedCurrentDate=currentDate.toString();
-                      UsersPostInfo postInfo=new UsersPostInfo(PostTextInput,formattedCurrentDate);
-                    assert postId != null;
-                    PostDataRef.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                      GlobalPost postInfo=new GlobalPost(postId,PostTextInput,formattedCurrentDate,username,userId ,1);
+                    PostDataRef.child(userId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                           @Override
                           public void onComplete(@NonNull Task<Void> task) {
                               if(task.isSuccessful()){
