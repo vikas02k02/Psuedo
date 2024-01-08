@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
         userPostAdapter.notifyDataSetChanged();
         FirebaseDatabase  database = FirebaseDatabase.getInstance();
         DatabaseReference reference=database.getReference().child("GlobalPosts");
-        Query query = reference.child(UId);
+        Query query = reference.orderByChild("userId").equalTo(UId);
         query.addChildEventListener(new ChildEventListener() {
             @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {

@@ -58,7 +58,7 @@ public class CreatePostFragment extends Fragment {
                       LocalDate currentDate= LocalDate.now();
                       String formattedCurrentDate=currentDate.toString();
                       GlobalPost postInfo=new GlobalPost(postId,PostTextInput,formattedCurrentDate,username,userId ,1);
-                    PostDataRef.child(userId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    PostDataRef.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                           @Override
                           public void onComplete(@NonNull Task<Void> task) {
                               if(task.isSuccessful()){

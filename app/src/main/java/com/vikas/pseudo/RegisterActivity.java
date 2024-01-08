@@ -26,7 +26,6 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
     EditText RegUsername,RegEmail ,RegPassword ,RegConfirmPassword ;
     Button RegBtnRegister;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     FirebaseAuth auth;
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -63,9 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String Status = "Hey I'm Pseudonymous";
                 if (TextUtils.isEmpty(Username) || TextUtils.isEmpty(Email) || TextUtils.isEmpty(Password) || TextUtils.isEmpty(ConfirmPassword)) {
                     Toast.makeText(getApplicationContext(), "Fill all details to register", Toast.LENGTH_SHORT).show();
-                } else if (!Email.matches(emailPattern)) {
-                    RegEmail.setError("Enter Valid Email Address");
-                } else if (!Password.equals(ConfirmPassword)) {
+                }else if (!Password.equals(ConfirmPassword)) {
                     RegConfirmPassword.setError("Not Matched");
                 } else if (Password.length() <=6) {
                     RegPassword.setError("Password Must be greater than 6 character");
