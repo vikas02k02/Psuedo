@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.vikas.pseudo.utility.HomePostAdapter;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -57,8 +58,9 @@ public class HomeFragment extends Fragment {
                 String userId = dataSnapshot.child("userId").getValue(String.class);
                 Integer postLikes = dataSnapshot.child("postLikes").getValue(Integer.class);
                 String postId = dataSnapshot.child("postId").getValue(String.class);
-
-                GlobalPost post = new GlobalPost(postId, postText, postDate, Username, userId, postLikes);
+                Map<String, Boolean> userLiked = (Map<String, Boolean>) dataSnapshot.child("likedBy").getValue();
+                Integer avatarId = dataSnapshot.child("avatarId").getValue(Integer.class);
+                GlobalPost post = new GlobalPost(postId, postText, postDate, Username, userId, postLikes ,userLiked,avatarId!=null?avatarId:0);
 
                 // Add the new post at the beginning of the list
                 HomeArrayList.add(0, post);

@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="trust">#E6A73D</color>
+    <color name="translucent">#B4151313</color>
 </resources>

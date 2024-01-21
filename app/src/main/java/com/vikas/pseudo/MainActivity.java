@@ -3,7 +3,6 @@ package com.vikas.pseudo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.vikas.pseudo.screens.ProfileFragment;
-
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     @Override
@@ -66,5 +64,6 @@ public class MainActivity extends AppCompatActivity {
         checkLogin();
         super.onStart();
     }
+
 
 }

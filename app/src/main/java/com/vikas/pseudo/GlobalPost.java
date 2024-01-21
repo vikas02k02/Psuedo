@@ -1,15 +1,23 @@
 package com.vikas.pseudo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GlobalPost {
     private  String PostText ,PostDate ,Username,UserId,PostId;
     private  Integer PostLikes;
-    public GlobalPost(String postId ,String postText , String postDate,String username,String userId ,Integer postLikes){
+    private int AvatarId;
+    private Map<String ,Boolean> likedBy ;
+    public GlobalPost(String postId ,String postText , String postDate,String username,String userId ,Integer postLikes, Map<String , Boolean> userLiked,int avatarId){
         PostText=postText;
         PostDate=postDate;
         Username=username;
         UserId=userId;
         PostLikes=postLikes;
         PostId=postId;
+        likedBy= userLiked;
+        AvatarId=avatarId;
+
 
     }
 
@@ -59,5 +67,21 @@ public class GlobalPost {
 
     public void setPostDate(String postDate) {
         PostDate = postDate;
+    }
+
+    public Map<String, Boolean> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Map<String, Boolean> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public int getAvatarId() {
+        return AvatarId;
+    }
+
+    public void setAvatarId(int avatarId) {
+        AvatarId = avatarId;
     }
 }

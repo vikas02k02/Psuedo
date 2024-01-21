@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             String Userid = Objects.requireNonNull(task.getResult().getUser()).getUid();
                             reference=database.getReference("Users").child(Userid);
-                            userinfo=new UsersInfo(Username,Email,Password,Status, 0);
+                            userinfo=new UsersInfo(Username,Email,Password,Status, 0,0);
                             reference.child("Profile_details").setValue(userinfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

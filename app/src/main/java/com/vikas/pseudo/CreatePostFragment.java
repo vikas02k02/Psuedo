@@ -17,8 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vikas.pseudo.client.FirebaseClient;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class CreatePostFragment extends Fragment {
@@ -50,22 +53,25 @@ public class CreatePostFragment extends Fragment {
                     Toast.makeText(getActivity(),"Post Can't be empty",Toast.LENGTH_SHORT).show();
                 }else {
                       String userId= Objects.requireNonNull(PostAuth.getCurrentUser()).getUid();
-                      String email = PostAuth.getCurrentUser().getEmail();
-                      String username = email.substring(0,email.length()-11);
-                      DatabaseReference UsernameReference=PostDatabase.getReference("Users");
+                      String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+                    assert email != null;
+                      String username = email.substring(0,email.indexOf('@'));
                       DatabaseReference PostDataRef=PostDatabase.getReference("GlobalPosts");
                       String postId= PostDataRef.push().getKey();
                       LocalDate currentDate= LocalDate.now();
                       String formattedCurrentDate=currentDate.toString();
-                      GlobalPost postInfo=new GlobalPost(postId,PostTextInput,formattedCurrentDate,username,userId ,1);
+                      Map<String , Boolean> isliked = new HashMap<>();
+                      isliked.put(userId,false);
+                      GlobalPost postInfo=new GlobalPost(postId,PostTextInput,formattedCurrentDate,username,userId ,0,isliked,0);
+                      assert postId != null;
                     PostDataRef.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                           @Override
                           public void onComplete(@NonNull Task<Void> task) {
                               if(task.isSuccessful()){
                                   PostText.setText("");
-                                  Toast.makeText(getActivity(),"Post Successfully Created",Toast.LENGTH_SHORT).show();
+                                  Toast.makeText(requireContext(),"Post Successfully Created",Toast.LENGTH_SHORT).show();
                               }else{
-                                  Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
+                                  Toast.makeText(requireContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
                               }
                           }
                       });
