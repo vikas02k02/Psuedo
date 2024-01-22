@@ -1,4 +1,4 @@
-package com.vikas.pseudo;
+package com.vikas.pseudo.screens;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
+import com.vikas.pseudo.MainActivity;
+import com.vikas.pseudo.R;
+import com.vikas.pseudo.screens.RegisterActivity;
 
 import java.util.Objects;
 
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 try {
-                                    Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                                    Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }catch (Exception e){

@@ -1,4 +1,4 @@
-package com.vikas.pseudo;
+package com.vikas.pseudo.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.vikas.pseudo.R;
 import com.vikas.pseudo.model.UsersInfo;
 
 import java.util.Objects;
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         RegBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

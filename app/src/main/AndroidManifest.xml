@@ -16,10 +16,10 @@
         android:theme="@style/Theme.Pseudo"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".screens.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".screens.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".splash"

@@ -1,4 +1,4 @@
-package com.vikas.pseudo;
+package com.vikas.pseudo.model;
 
 import java.util.HashMap;
 import java.util.Map;

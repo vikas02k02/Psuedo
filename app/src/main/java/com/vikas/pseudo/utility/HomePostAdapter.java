@@ -18,7 +18,7 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
-import com.vikas.pseudo.GlobalPost;
+import com.vikas.pseudo.model.GlobalPost;
 import com.vikas.pseudo.R;
 import com.vikas.pseudo.client.FirebaseClient;
 import java.util.ArrayList;

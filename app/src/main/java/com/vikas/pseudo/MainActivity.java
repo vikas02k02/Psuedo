@@ -12,6 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.vikas.pseudo.screens.CreatePostFragment;
+import com.vikas.pseudo.screens.HomeFragment;
+import com.vikas.pseudo.screens.LoginActivity;
 import com.vikas.pseudo.screens.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
